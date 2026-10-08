@@ -8,452 +8,430 @@
 <meta property="og:title" content="VOLT">
 <meta property="og:description" content="VOLT: reliable, app-free EV fast charging from Hyderabad. 160 kW chargers, and volters, the proof-of-charge coin that pays drivers back.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#F1F2EF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121617" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' fill='%23FFCC00' stroke='%231D2325' stroke-width='3'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 72'%3E%3Cpath d='M33 4 5 42h17l-8 28 30-40H27z' fill='%23F26212'/%3E%3Crect x='4' y='64' width='48' height='6' rx='3' fill='%230A9E6B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,400..900&family=Instrument+Sans:wght@400..700&family=Martian+Mono:wdth,wght@75..112.5,400..600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
 <style>
-/* Base reset (the artifact viewer supplied this; a standalone page needs its own) */
-:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; }
-img { max-width: 100%; }
-[hidden] { display: none !important; }
-
-/* Layout: a charger spec sheet on a Hyderabad street. Expanded headlines, condensed numerals,
-   signal yellow used like a status lamp, and one full-bleed yellow band for the franchise idea. */
+/* Layout: the driver app's visual language at page scale. One orange brand panel up top
+   (the app's login screen), then white and soft-grey surfaces. Orange marks what you do,
+   green marks what you earn. Light values come from the app; dark values from the
+   prototype's own dark stage. */
 :root {
-  --bg: #F1F2EF;
-  --surface: #FBFBFA;
-  --ink: #1D2325;
-  --muted: #566063;
-  --line: #D2D7D5;
-  --grid: rgba(29, 35, 37, .055);
-  --signal: #FFCC00;
-  --on-signal: #1D2325;
-  --hatch: #7E888B;
-  --device: #1A1F21;
-  --device-fg: #E8EBE6;
-  --device-muted: #8D979A;
-  --device-line: #2F373A;
-  --device-live: #3DCB80;
-  --shadow: 0 30px 60px -30px rgba(29, 35, 37, .5);
+  --orange: #F26212;
+  --orange-press: #D24F06;
+  --orange-soft: #FFF0E5;
+  --orange-ink: #8A3208;
+  --green: #0A9E6B;
+  --green-soft: #E6F7F0;
+  --green-ink: #066142;
+  --bg: #FFFFFF;
+  --card: #FFFFFF;
+  --surface: #F6F6F7;
+  --line: #EDEDEF;
+  --line-2: #E2E2E5;
+  --text: #16181D;
+  --t2: #6B6E76;
+  --t3: #9CA0A8;
+  --shadow: 0 2px 10px rgba(22, 24, 29, .10);
+  --shadow-lg: 0 28px 60px -28px rgba(22, 24, 29, .38);
 
-  --font-display: "Anybody", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Martian Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* The brand panel is orange in both themes, so these never change */
+  --panel: #F26212;
+  --on-panel: #FFFFFF;
+  --on-panel-2: #FFE0CC;
+  --on-panel-ink: #8A3208;
+  --panel-green: #00D08A;
 
-  --step--1: .8125rem;
-  --step-0: 1.0625rem;
-  --step-1: 1.25rem;
-  --step-2: clamp(1.4rem, 2.2vw, 1.75rem);
-  --step-3: clamp(2rem, 4.2vw, 3.25rem);
-  --step-4: clamp(2.4rem, 5.6vw, 4.5rem);
-
+  --font: "Roboto", "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
+  --mono: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r: 14px;
+  --r-btn: 11px;
+  --r-panel: 28px;
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
-  --radius: 3px;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #121617;
-    --surface: #191E20;
-    --ink: #E7EAE5;
-    --muted: #9BA5A7;
-    --line: #2B3336;
-    --grid: rgba(231, 234, 229, .045);
-    --signal: #FFD21F;
-    --on-signal: #15191A;
-    --hatch: #79858A;
-    --device: #0B0E0F;
-    --device-fg: #E8EBE6;
-    --device-muted: #8D979A;
-    --device-line: #283033;
-    --device-live: #3DCB80;
-    --shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+    --orange-press: #FF7A2E;
+    --orange-soft: #2A1B12;
+    --orange-ink: #FF9A52;
+    --green: #12B47C;
+    --green-soft: #10241E;
+    --green-ink: #3FD39A;
+    --bg: #101114;
+    --card: #17191E;
+    --surface: #1B1D22;
+    --line: #24272D;
+    --line-2: #2E3138;
+    --text: #ECEDEF;
+    --t2: #8A8D94;
+    --t3: #6E7178;
+    --shadow: 0 2px 10px rgba(0, 0, 0, .45);
+    --shadow-lg: 0 28px 60px -28px rgba(0, 0, 0, .85);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #121617;
-  --surface: #191E20;
-  --ink: #E7EAE5;
-  --muted: #9BA5A7;
-  --line: #2B3336;
-  --grid: rgba(231, 234, 229, .045);
-  --signal: #FFD21F;
-  --on-signal: #15191A;
-  --hatch: #79858A;
-  --device: #0B0E0F;
-  --device-fg: #E8EBE6;
-  --device-muted: #8D979A;
-  --device-line: #283033;
-  --device-live: #3DCB80;
-  --shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+  --orange-press: #FF7A2E;
+  --orange-soft: #2A1B12;
+  --orange-ink: #FF9A52;
+  --green: #12B47C;
+  --green-soft: #10241E;
+  --green-ink: #3FD39A;
+  --bg: #101114;
+  --card: #17191E;
+  --surface: #1B1D22;
+  --line: #24272D;
+  --line-2: #2E3138;
+  --text: #ECEDEF;
+  --t2: #8A8D94;
+  --t3: #6E7178;
+  --shadow: 0 2px 10px rgba(0, 0, 0, .45);
+  --shadow-lg: 0 28px 60px -28px rgba(0, 0, 0, .85);
   color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
 body {
+  margin: 0;
   background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: var(--step-0);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.0625rem;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
 [id] { scroll-margin-top: 84px; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; overflow-wrap: break-word; }
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-weight: 400; letter-spacing: -.03em; line-height: 1.08; text-wrap: balance; overflow-wrap: break-word; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); }
+h3 { font-size: 1.2rem; font-weight: 500; letter-spacing: -.01em; line-height: 1.25; }
 p, ol, ul, dl, dd, figure { margin: 0; }
 
 .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.lab { font-size: .875rem; color: var(--t2); line-height: 1.45; }
+.big { font-weight: 400; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 
-/* Shared type */
-.eyebrow {
-  display: inline-flex; align-items: center; gap: .65em;
-  font-family: var(--font-mono); font-stretch: 87.5%;
-  font-size: .72rem; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--muted);
+/* Chips, icons and buttons, as in the app */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  justify-self: start; align-self: start; width: max-content; max-width: 100%;
+  padding: 5px 11px; border-radius: 20px;
+  font-size: .8125rem; font-weight: 500; line-height: 1.35;
 }
-.eyebrow::before, .lamp {
-  content: ""; width: .75em; height: .75em; flex: none;
-  background: var(--signal); box-shadow: inset 0 0 0 1.5px var(--ink);
+.chip-orange { background: var(--orange-soft); color: var(--orange-ink); }
+.chip-green { background: var(--green-soft); color: var(--green-ink); }
+.chip-grey { background: var(--surface); color: var(--t2); }
+.mi {
+  display: grid; place-items: center; flex: none;
+  width: 40px; height: 40px; border-radius: 11px;
+  background: var(--orange-soft); color: var(--orange);
 }
-.label {
-  font-family: var(--font-mono); font-stretch: 87.5%;
-  font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--muted);
+.mi svg { width: 20px; height: 20px; }
+.idx {
+  display: grid; place-items: center; flex: none;
+  width: 40px; height: 40px; border-radius: 11px;
+  background: var(--orange-soft); color: var(--orange-ink);
+  font-weight: 500; font-variant-numeric: tabular-nums;
 }
-h2 { font-size: var(--step-3); font-weight: 780; font-stretch: 112%; line-height: 1.02; letter-spacing: -.01em; }
-h3 { font-size: var(--step-1); font-weight: 720; font-stretch: 108%; line-height: 1.15; }
-.numeral { font-family: var(--font-display); font-stretch: 60%; font-weight: 900; line-height: .85; }
-
-/* Buttons */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 48px; padding: 0 22px;
-  background: var(--signal); color: var(--on-signal);
-  border: 1.5px solid var(--on-signal); border-radius: var(--radius);
-  font-weight: 600; text-decoration: none;
-  transition: transform .15s ease, box-shadow .15s ease;
+  min-height: 50px; padding: 0 22px;
+  border: 1px solid transparent; border-radius: var(--r-btn);
+  background: var(--orange); color: var(--on-panel);
+  font: 500 1rem/1.2 var(--font); text-decoration: none;
+  transition: background-color .15s ease, transform .15s ease;
 }
-.btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
-.btn-sm { min-height: 40px; padding: 0 16px; font-size: .9rem; }
+.btn:hover { background: var(--orange-press); }
+.btn:active { transform: translateY(1px); }
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: .9375rem; }
+.btn-light { background: var(--on-panel); color: var(--on-panel-ink); }
+.btn-light:hover { background: var(--on-panel-2); }
+.btn-outline-light { background: transparent; color: var(--on-panel); border-color: rgba(255, 255, 255, .6); }
+.btn-outline-light:hover { background: rgba(255, 255, 255, .12); }
+
+/* Logo */
+.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
+.brand svg { width: 18px; height: 24px; flex: none; }
+.wordmark { font-size: 1.15rem; font-weight: 500; letter-spacing: .16em; }
+.logo-bolt { fill: var(--orange); }
+.logo-bar { fill: var(--green); }
 
 /* Header */
 .site-head {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  -webkit-backdrop-filter: saturate(1.2) blur(10px);
-  backdrop-filter: saturate(1.2) blur(10px);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
 }
 .head-row { display: flex; align-items: center; gap: 28px; min-height: 64px; }
-.wordmark {
-  display: inline-flex; align-items: center; gap: .3em;
-  font-family: var(--font-display); font-weight: 900; font-stretch: 150%;
-  font-size: 1.35rem; letter-spacing: .02em; text-decoration: none;
-}
-.wordmark .lamp { width: .42em; height: .42em; }
-.site-nav { display: flex; gap: 28px; margin-left: auto; font-size: .95rem; }
-.site-nav a { text-decoration: none; color: var(--muted); }
-.site-nav a:hover { color: var(--ink); }
+.site-nav { display: flex; gap: 28px; margin-left: auto; font-size: .9375rem; }
+.site-nav a { text-decoration: none; color: var(--t2); }
+.site-nav a:hover { color: var(--text); }
 @media (max-width: 820px) {
   .site-nav { display: none; }
   .head-row .btn-sm { margin-left: auto; }
 }
 
-/* Hero */
-.hero { position: relative; padding-block: clamp(48px, 8vw, 104px) clamp(56px, 8vw, 112px); }
-.hero::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent);
+/* Hero: the app's orange login panel */
+.hero {
+  background: var(--panel); color: var(--on-panel);
+  border-radius: 0 0 var(--r-panel) var(--r-panel);
+  padding-block: clamp(44px, 7vw, 96px);
+  overflow: hidden;
 }
-.hero-grid {
-  position: relative;
-  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
-  gap: clamp(40px, 6vw, 80px); align-items: center;
-}
-.hero-copy { display: grid; gap: 26px; justify-items: start; }
-h1 { font-size: var(--step-4); font-weight: 820; font-stretch: 118%; line-height: .98; letter-spacing: -.015em; }
+.hero :focus-visible { outline-color: var(--on-panel); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero-copy { display: grid; gap: 24px; justify-items: start; }
+.hero .chip { background: rgba(255, 255, 255, .16); color: var(--on-panel); }
+h1 { font-size: clamp(2.5rem, 5.4vw, 4.5rem); letter-spacing: -.035em; line-height: 1.04; }
 h1 .mark {
-  text-decoration: underline; text-decoration-color: var(--signal);
-  text-decoration-thickness: .14em; text-underline-offset: .1em; text-decoration-skip-ink: none;
+  text-decoration: underline; text-decoration-color: var(--panel-green);
+  text-decoration-thickness: .08em; text-underline-offset: .14em; text-decoration-skip-ink: none;
 }
-.lede { font-size: var(--step-1); color: var(--muted); max-width: 34em; line-height: 1.5; }
+.lede { font-size: 1.2rem; color: var(--on-panel-2); max-width: 34em; line-height: 1.55; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .facts {
-  list-style: none; padding: 18px 0 0; width: 100%; max-width: 640px;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr)); gap: 20px;
-  border-top: 1px solid var(--line);
+  list-style: none; padding: 20px 0 0; width: 100%; max-width: 640px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: 20px;
+  border-top: 1px solid rgba(255, 255, 255, .3);
 }
-.facts li { display: grid; gap: 6px; align-content: start; font-size: .875rem; color: var(--muted); line-height: 1.35; }
-.facts b { font-size: 2.6rem; color: var(--ink); font-variant-numeric: tabular-nums; }
-@media (max-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
+.facts li { display: grid; gap: 6px; align-content: start; font-size: .875rem; color: var(--on-panel-2); line-height: 1.4; }
+.facts b { font-size: 2.5rem; color: var(--on-panel); }
+.hero-art { display: grid; place-items: center; }
+.hero-svg { display: block; width: 100%; max-width: 520px; height: auto; }
+.hero-svg .coin { transform-box: fill-box; transform-origin: center; animation: rise 3.6s ease-in-out infinite; }
+.hero-svg .c2 { animation-delay: -1.2s; }
+.hero-svg .c3 { animation-delay: -2.4s; }
+.hero-svg .batt { transform-box: fill-box; transform-origin: left center; transform: scaleX(.62); animation: fill 6s ease-in-out infinite; }
+@keyframes rise { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes fill { 0% { transform: scaleX(.18); } 85%, 100% { transform: scaleX(1); } }
+
+/* Sections */
+.section { padding-block: clamp(64px, 9vw, 112px); }
+.section + .section { border-top: 1px solid var(--line); }
+.section > .wrap { display: grid; gap: clamp(32px, 5vw, 56px); }
+.section-head { display: grid; gap: 16px; max-width: 46rem; }
+.split-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px clamp(24px, 5vw, 72px); align-items: end; }
+.split-head > div { display: grid; gap: 16px; }
+.split-head > p { color: var(--t2); font-size: 1.1rem; max-width: 34rem; }
+
+/* Who we are */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.about-grid > div:first-child { display: grid; gap: 16px; }
+.statement { font-size: clamp(2.1rem, 4.4vw, 3.6rem); letter-spacing: -.035em; line-height: 1.04; }
+.about-body { display: grid; gap: 20px; max-width: 36rem; }
+.about-body > p { font-size: 1.2rem; line-height: 1.55; }
+.gloss { display: grid; gap: 6px; padding: 18px 20px; background: var(--surface); border-radius: var(--r); }
+.gloss dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6em; font-size: 1.5rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.2; }
+.gloss dt span { font-size: .8125rem; font-weight: 400; font-style: italic; letter-spacing: 0; color: var(--t2); }
+.gloss dd { color: var(--t2); }
+.two-up { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.two-up > div { display: grid; gap: 8px; align-content: start; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--r); }
+.two-up p { color: var(--t2); font-size: .98rem; }
+
+/* What we fix */
+.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.pillar {
+  display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 16px;
+  padding: 22px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+}
+.pillar-head { display: flex; align-items: center; gap: 12px; }
+.pillar h3 { font-size: 1.35rem; }
+.pillar p { display: grid; gap: 8px; justify-items: start; align-content: start; font-size: .98rem; }
+.pillar .was { color: var(--t2); }
+
+/* Charging at an ADDA */
+.how-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.how-grid > div { display: grid; gap: clamp(28px, 4vw, 44px); }
+.steps { list-style: none; padding: 0; display: grid; }
+.steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 16px; align-items: start; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.steps li:first-child { padding-top: 0; }
+.steps li:last-child { padding-bottom: 0; border-bottom: 0; }
+.steps li > div { display: grid; gap: 4px; padding-top: 8px; }
+.steps p { color: var(--t2); }
 
 /* Charger screen */
 .device {
-  justify-self: end; width: 100%; max-width: 420px;
-  display: grid; gap: 16px; padding: 22px;
-  background: var(--device); color: var(--device-fg);
-  border: 1px solid var(--device-line); border-radius: 22px; box-shadow: var(--shadow);
-  font-family: var(--font-mono); font-stretch: 87.5%; font-size: .78rem;
+  display: grid; gap: 14px; padding: 20px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-lg);
 }
-@media (max-width: 900px) { .device { justify-self: stretch; max-width: 520px; } }
-.device-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.device-name, .device-meta, .readout-label { font-size: .68rem; letter-spacing: .09em; text-transform: uppercase; color: var(--device-muted); }
-.status {
-  display: inline-flex; align-items: center; gap: 8px; padding: 5px 10px;
-  border: 1px solid var(--device-line); border-radius: 999px;
-  font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
-}
-.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--device-live); animation: pulse 1.6s ease-out infinite; }
-.device[data-state="done"] .dot { background: var(--signal); animation: none; }
+.device-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.device-top > div { display: grid; gap: 2px; }
+.device-top b { font-weight: 500; letter-spacing: -.01em; }
+.status { flex: none; }
+.status .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.6s ease-out infinite; }
+.device[data-state="done"] .status { background: var(--surface); color: var(--t2); }
+.device[data-state="done"] .dot { animation: none; }
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--device-live) 60%, transparent); }
-  100% { box-shadow: 0 0 0 8px transparent; }
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
+  100% { box-shadow: 0 0 0 7px transparent; }
 }
-.readout {
-  display: grid; gap: 8px; padding: 18px;
-  border: 1px solid var(--device-line); border-radius: 12px;
-  background: color-mix(in srgb, var(--device-fg) 4%, transparent);
-}
-.readout-value {
-  display: flex; align-items: baseline; gap: .25em;
-  font-size: clamp(2.4rem, 7vw, 3.3rem); font-weight: 500; font-stretch: 100%; line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.readout-value small { font-size: .3em; color: var(--device-muted); letter-spacing: .05em; }
-.device-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-variant-numeric: tabular-nums; }
-.device-row > span:first-child { display: inline-flex; align-items: center; gap: 8px; color: var(--device-muted); }
-.device-row.strong > span:first-child { color: var(--device-fg); }
-.device-split { display: grid; gap: 10px; padding-top: 14px; border-top: 1px dashed var(--device-line); }
-.split-bar { display: grid; grid-template-columns: 5fr 1fr 4fr; gap: 3px; height: 10px; }
-.split-bar i, .key { display: block; }
+.readout { display: grid; gap: 4px; padding: 16px; background: var(--surface); border-radius: var(--r); }
+.readout-value { display: flex; align-items: baseline; gap: .3em; font-size: clamp(2.6rem, 6vw, 3.2rem); }
+.readout-value small { font-size: .3em; letter-spacing: 0; color: var(--t2); }
+.bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.bar span { display: block; height: 100%; border-radius: 3px; background: var(--orange); }
+.device-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: .9375rem; font-variant-numeric: tabular-nums; }
+.device-row > span:first-child { display: inline-flex; align-items: center; gap: 8px; color: var(--t2); }
+.mint-tile { display: grid; gap: 10px; padding: 14px 16px; background: var(--green-soft); border-radius: var(--r); color: var(--green-ink); }
+.mint-tile .device-row > span:first-child { color: var(--green-ink); }
+.mint-tile .device-row.strong { font-weight: 500; }
+.split-bar { display: grid; grid-template-columns: 5fr 1fr 4fr; gap: 3px; height: 8px; }
+.split-bar i, .key { display: block; border-radius: 2px; }
 .key { width: 9px; height: 9px; flex: none; }
-.d-you { background: var(--signal); }
-.d-volt { background: var(--device-fg); }
-.d-home {
-  background: repeating-linear-gradient(135deg, var(--device-muted) 0 1.5px, transparent 1.5px 4px);
-  box-shadow: inset 0 0 0 1px var(--device-muted);
-}
-.device-foot {
-  display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  padding-top: 14px; border-top: 1px solid var(--device-line);
-  font-size: .68rem; color: var(--device-muted);
-}
-.device-foot .tag {
-  flex: none; padding: 3px 8px; border: 1px solid var(--device-line); border-radius: 999px;
-  letter-spacing: .09em; text-transform: uppercase;
-}
-
-/* Sections */
-.section { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--line); }
-.section > .wrap { display: grid; gap: clamp(36px, 5vw, 60px); }
-.section-head { display: grid; gap: 18px; max-width: 46rem; }
-.split-head {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px clamp(24px, 5vw, 72px); align-items: end;
-}
-.split-head > div { display: grid; gap: 18px; }
-.split-head > p { color: var(--muted); font-size: 1.1rem; max-width: 34rem; }
-
-/* About */
-.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 6vw, 96px); align-items: start; }
-.about-grid > div:first-child { display: grid; gap: 18px; container-type: inline-size; }
-.statement { font-size: clamp(1.9rem, 3.6vw, 3.2rem); font-size: min(4rem, 8.6cqi); font-stretch: 112%; font-weight: 830; line-height: 1; }
-.about-body { display: grid; gap: 32px; max-width: 36rem; }
-.about-body > p { font-size: var(--step-1); line-height: 1.55; }
-.gloss { display: grid; gap: 6px; padding-top: 22px; border-top: 1px solid var(--line); }
-.gloss dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6em; font-family: var(--font-display); font-weight: 800; font-stretch: 125%; font-size: 1.6rem; line-height: 1.1; }
-.gloss dt span { font-family: var(--font-mono); font-stretch: 87.5%; font-weight: 400; font-size: .72rem; letter-spacing: .06em; color: var(--muted); }
-.gloss dd { color: var(--muted); }
-.two-up { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
-.two-up > div { display: grid; gap: 8px; align-content: start; }
-.two-up p { color: var(--muted); font-size: .98rem; }
-
-/* Pillars */
-.pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 48px clamp(20px, 3vw, 32px); }
-.pillar { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 16px; padding-top: 18px; border-top: 3px solid var(--ink); }
-.pillar h3 { font-size: var(--step-2); font-stretch: 125%; font-weight: 830; }
-.pillar p { display: grid; gap: 6px; align-content: start; font-size: .98rem; }
-.pillar .was { color: var(--muted); }
-.pillar .now .label { display: inline-flex; align-items: center; gap: .6em; color: var(--ink); }
-.pillar .now .label::before { content: ""; width: .75em; height: .75em; background: var(--signal); box-shadow: inset 0 0 0 1.5px var(--ink); }
-
-/* Steps */
-.steps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(24px, 3vw, 36px); }
-.steps li { display: grid; gap: 12px; align-content: start; }
-.steps .numeral { font-size: 5rem; color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
-.steps p { color: var(--muted); font-size: .98rem; }
+.k-you { background: var(--green); }
+.k-volt { background: var(--text); }
+.k-home { background: var(--orange); }
+.device-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: .8125rem; color: var(--t2); }
 
 /* Volters */
-.chain {
-  list-style: none; padding: 0;
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-}
-.chain li { position: relative; display: grid; gap: 4px; align-content: start; padding: 18px 22px; }
-.chain li + li { border-left: 1px solid var(--line); }
-.chain li + li::before {
-  content: "→"; position: absolute; left: 0; top: 50%; transform: translate(-50%, -50%);
-  display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
-  background: var(--surface); border: 1px solid var(--line);
-  font-family: var(--font-mono); font-size: .8rem; color: var(--muted);
-}
-.chain b { font-family: var(--font-display); font-stretch: 115%; font-weight: 760; font-size: 1.15rem; }
-.chain span { color: var(--muted); font-size: .9rem; line-height: 1.4; }
+.chain { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.chain li { display: grid; gap: 8px; align-content: start; padding: 18px; background: var(--surface); border-radius: var(--r); }
+.tick { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--green); color: var(--on-panel); }
+.tick svg { width: 14px; height: 14px; }
+.chain b { font-size: 1.1rem; font-weight: 500; letter-spacing: -.01em; }
 
-.mint-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 5vw, 72px); align-items: start; }
+.mint-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
 .split-explain { display: grid; gap: 28px; }
-.big-line {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: .1em .35em;
-  font-family: var(--font-display); font-stretch: 112%; font-weight: 760; font-size: var(--step-2); line-height: 1.2;
-}
-.big-line .numeral { font-size: 2.6em; }
+.big-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1em .3em; font-size: clamp(1.4rem, 2.4vw, 1.8rem); letter-spacing: -.02em; line-height: 1.25; }
+.big-line .big { font-size: 2.4em; }
 .tenbar { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 8px 6px; max-width: 520px; }
-.tenbar i { display: block; aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 1.5px solid var(--ink); }
-.c-you { background: var(--signal); box-shadow: inset 0 0 0 3px var(--signal), inset 0 0 0 4.5px var(--on-signal); }
-.c-volt { background: var(--ink); box-shadow: inset 0 0 0 3px var(--ink), inset 0 0 0 4.5px var(--bg); }
-.c-home { background: repeating-linear-gradient(135deg, var(--hatch) 0 1.5px, transparent 1.5px 5px); }
-.tenbar .g {
-  padding-top: 6px; border-top: 1.5px solid var(--ink); text-align: center;
-  font-family: var(--font-mono); font-size: .72rem;
-}
-.g-you { grid-column: span 5; }
-.g-volt { grid-column: span 1; }
-.g-home { grid-column: span 4; }
+.tenbar i { display: block; aspect-ratio: 1; max-width: 100%; border-radius: 50%; }
+.c-you { background: var(--green); box-shadow: inset 0 0 0 3px var(--green), inset 0 0 0 4.5px var(--green-soft); }
+.c-volt { background: var(--text); box-shadow: inset 0 0 0 3px var(--text), inset 0 0 0 4.5px var(--bg); }
+.c-home { background: var(--orange); box-shadow: inset 0 0 0 3px var(--orange), inset 0 0 0 4.5px var(--orange-soft); }
+.tenbar .g { padding-top: 8px; border-top: 2px solid; text-align: center; font-size: .8125rem; font-weight: 500; }
+.g-you { grid-column: span 5; border-color: var(--green); color: var(--green-ink); }
+.g-volt { grid-column: span 1; border-color: var(--text); }
+.g-home { grid-column: span 4; border-color: var(--orange); color: var(--orange-ink); }
 .legend { display: grid; gap: 14px; }
 .legend > div { display: grid; gap: 2px; }
-.legend dt { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-.legend dd { margin-left: 22px; color: var(--muted); font-size: .98rem; }
-.sw { width: 12px; height: 12px; flex: none; border-radius: 50%; border: 1.5px solid var(--ink); }
-.sw-you { background: var(--signal); }
-.sw-volt { background: var(--ink); }
-.sw-home { background: repeating-linear-gradient(135deg, var(--hatch) 0 1.5px, transparent 1.5px 4px); }
+.legend dt { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+.legend dd { margin-left: 22px; color: var(--t2); font-size: .98rem; }
+.sw { width: 12px; height: 12px; flex: none; border-radius: 50%; }
+.sw-you { background: var(--green); }
+.sw-volt { background: var(--text); }
+.sw-home { background: var(--orange); }
 
 .calc {
-  display: grid; gap: 22px; padding: clamp(20px, 3vw, 32px);
-  background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  display: grid; gap: 20px; padding: clamp(20px, 3vw, 28px);
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow);
 }
 .field { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 12px; align-items: baseline; }
-.field label { font-weight: 600; }
-.field output { font-family: var(--font-mono); font-size: .9rem; font-variant-numeric: tabular-nums; }
-.field input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--ink); }
-.calc-big { display: grid; gap: 6px; padding-top: 22px; border-top: 1px solid var(--line); }
-.calc-big .numeral { font-size: clamp(3.5rem, 8vw, 5rem); font-variant-numeric: tabular-nums; }
-.calc-big small { color: var(--muted); font-size: .95rem; }
+.field label { font-weight: 500; }
+.field output { color: var(--t2); font-variant-numeric: tabular-nums; }
+.field input[type="range"] { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--orange); }
+.mine-card { display: grid; gap: 4px; justify-items: center; text-align: center; padding: 16px; background: var(--green-soft); border-radius: var(--r); color: var(--green-ink); }
+.mine-card .big { font-size: clamp(2.8rem, 6vw, 3.6rem); }
+.mine-card small { font-size: .875rem; }
+.calc-flat { display: grid; gap: 4px; padding: 12px 16px 4px; background: var(--surface); border-radius: var(--r); }
 .calc-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.calc-table caption { text-align: left; padding-bottom: 8px; }
-.calc-table th, .calc-table td { padding: 9px 0; border-top: 1px solid var(--line); }
-.calc-table th { text-align: left; font-weight: 400; color: var(--muted); }
-.calc-table td { text-align: right; font-family: var(--font-mono); font-size: .9rem; }
+.calc-table th, .calc-table td { padding: 10px 0; border-top: 1px solid var(--line-2); }
+.calc-table tr:first-child th, .calc-table tr:first-child td { border-top: 0; }
+.calc-table th { text-align: left; font-weight: 400; color: var(--t2); }
+.calc-table td { text-align: right; }
 
-/* Franchise band: the page's one loud moment */
-.band {
-  --ink: var(--on-signal);
-  --muted: color-mix(in srgb, var(--on-signal) 74%, var(--signal));
-  --line: var(--on-signal);
-  background: var(--signal); color: var(--on-signal);
-  padding-block: clamp(72px, 10vw, 128px);
-}
-.band > .wrap { display: grid; gap: clamp(40px, 6vw, 64px); }
-.franchise-top { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 28px clamp(28px, 5vw, 72px); align-items: end; }
-.franchise-top > div:first-child { display: grid; gap: 22px; }
-.huge { display: grid; font-size: clamp(5.5rem, 19vw, 13rem); letter-spacing: -.01em; }
-.huge span { font-stretch: 125%; font-weight: 800; font-size: .15em; letter-spacing: .04em; line-height: 1.4; text-transform: uppercase; }
-.franchise-copy { display: grid; gap: 18px; }
-.franchise-copy p { font-size: 1.1rem; }
-.mono-note { padding-top: 14px; border-top: 1.5px solid var(--ink); font-family: var(--font-mono); font-stretch: 87.5%; font-size: .78rem !important; line-height: 1.6; }
+/* Franchise */
+.franchise-panel { display: grid; gap: clamp(36px, 5vw, 56px); padding: clamp(24px, 5vw, 64px); background: var(--surface); border-radius: var(--r-panel); }
+.franchise-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px clamp(28px, 5vw, 72px); align-items: end; }
+.franchise-top > div:first-child { display: grid; gap: 16px; }
+.huge { display: grid; gap: 10px; font-size: clamp(4.2rem, 12vw, 8.5rem); color: var(--green-ink); }
+.huge span { font-size: 1.1rem; font-weight: 500; letter-spacing: 0; color: var(--t2); }
+.franchise-copy { display: grid; gap: 16px; }
+.franchise-copy p { font-size: 1.1rem; color: var(--t2); }
+.franchise-copy .callout { padding: 14px 16px; background: var(--orange-soft); color: var(--orange-ink); border-radius: var(--r); font-size: .9375rem; line-height: 1.5; }
 
 .loop-wrap { display: grid; }
 .loop { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; }
-.loop li { position: relative; display: grid; gap: 8px; align-content: start; padding: 18px; border: 2px solid var(--ink); border-radius: var(--radius); font-size: .98rem; }
-.loop li b { display: block; font-family: var(--font-display); font-stretch: 110%; font-weight: 780; font-size: 1.15rem; line-height: 1.2; }
+.loop li {
+  position: relative; display: grid; gap: 10px; align-content: start; padding: 18px;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+  font-size: .98rem; color: var(--t2);
+}
+.loop li b { display: block; color: var(--text); font-size: 1.05rem; font-weight: 500; letter-spacing: -.01em; line-height: 1.3; }
+.loop .idx { width: 32px; height: 32px; border-radius: 9px; font-size: .875rem; }
 .loop li:not(:last-child)::after {
   content: "→"; position: absolute; right: -32px; top: 50%; transform: translateY(-50%);
-  width: 24px; text-align: center; font-size: 1.5rem; line-height: 1;
+  width: 24px; text-align: center; font-size: 1.25rem; line-height: 1; color: var(--t3);
 }
 .loop-return {
   position: relative; height: 40px; margin-inline: calc((100% - 120px) / 8);
   display: flex; justify-content: center; align-items: flex-end;
-  border: 2px solid var(--ink); border-top: 0;
+  border: 1.5px solid var(--t3); border-top: 0;
 }
 .loop-return::before {
-  content: ""; position: absolute; left: -8px; top: 0;
-  border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 10px solid var(--ink);
+  content: ""; position: absolute; left: -6.75px; top: 0;
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 9px solid var(--t3);
 }
-.loop-return span {
-  transform: translateY(50%); padding-inline: 12px; background: var(--signal);
-  font-family: var(--font-mono); font-stretch: 87.5%; font-size: .7rem; letter-spacing: .09em; text-transform: uppercase;
-}
-.loop-note { display: none; padding-top: 18px; font-family: var(--font-mono); font-stretch: 87.5%; font-size: .78rem; }
+.loop-return span { transform: translateY(50%); padding-inline: 12px; background: var(--surface); font-size: .8125rem; color: var(--t2); }
+.loop-note { display: none; padding-top: 18px; font-size: .9375rem; color: var(--t2); }
 
-.compare-wrap { overflow-x: auto; }
+.compare-wrap { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); }
 .compare { width: 100%; border-collapse: collapse; }
-.compare th, .compare td { padding: 14px 16px 14px 0; text-align: left; vertical-align: top; border-top: 1.5px solid var(--ink); }
-.compare thead th { border-top: 0; padding-top: 0; }
-.compare tbody th { font-weight: 600; width: 26%; }
-.compare td:last-child { font-weight: 600; }
+.compare th, .compare td { padding: 14px 18px; text-align: left; vertical-align: top; border-top: 1px solid var(--line); }
+.compare thead th { border-top: 0; font-size: .875rem; font-weight: 400; color: var(--t2); }
+.compare tbody th { width: 26%; font-weight: 500; }
+.compare td:last-child { color: var(--green-ink); font-weight: 500; }
 
 /* Home chargers and spending */
 .home-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); }
-.home-grid > div { display: grid; gap: 20px; align-content: start; }
-.home-grid > div > p { color: var(--muted); font-size: 1.05rem; max-width: 34rem; }
-.pool-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 16px 0; border-block: 1px solid var(--line); }
-.pool-line .numeral { font-size: 3rem; }
-.pool-line span:last-child { color: var(--muted); font-size: .95rem; max-width: 22rem; }
+.home-grid > div { display: grid; gap: 18px; align-content: start; }
+.home-grid > div > p { color: var(--t2); font-size: 1.05rem; max-width: 34rem; }
+.pool-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 16px 18px; background: var(--orange-soft); border-radius: var(--r); color: var(--orange-ink); }
+.pool-line .big { font-size: 3rem; }
+.pool-line span:last-child { max-width: 24rem; font-size: .98rem; }
 .spend { list-style: none; padding: 0; display: grid; }
-.spend li { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 16px; align-items: baseline; padding-block: 18px; border-top: 1px solid var(--line); }
-.spend li:last-child { border-bottom: 1px solid var(--line); }
-.spend h3 { font-size: 1.35rem; font-stretch: 112%; font-weight: 820; }
-.spend p { color: var(--muted); }
+.spend li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; align-items: start; padding-block: 16px; border-bottom: 1px solid var(--line); }
+.spend li:first-child { padding-top: 4px; }
+.spend li:last-child { border-bottom: 0; }
+.spend li > div { display: grid; gap: 2px; }
+.spend p { color: var(--t2); }
 
-/* City */
-.city-name { font-size: clamp(2.4rem, 8vw, 6.5rem); font-size: min(7.5rem, 11cqi); font-stretch: 125%; font-weight: 900; line-height: .92; letter-spacing: -.02em; }
-.coords { font-family: var(--font-mono); font-stretch: 87.5%; font-size: .8rem; letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.city-head { display: grid; gap: 18px; container-type: inline-size; }
-.city-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px clamp(36px, 6vw, 96px); align-items: end; padding-top: 28px; border-top: 1px solid var(--line); }
-.city-grid p { font-size: 1.1rem; max-width: 34rem; }
-.city-next { font-family: var(--font-display); font-stretch: 118%; font-weight: 800; font-size: var(--step-2) !important; line-height: 1.15; }
+/* Where we are */
+.city-head { display: grid; gap: 16px; }
+.city-name { font-size: clamp(3rem, 10vw, 7.5rem); letter-spacing: -.045em; line-height: .95; }
+.coords { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: .8125rem; color: var(--t2); }
+.coords svg { width: 16px; height: 20px; flex: none; }
+.pin { fill: var(--orange); }
+.pin-bolt { fill: var(--on-panel); }
+.city-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px clamp(36px, 6vw, 96px); align-items: end; padding-top: 28px; border-top: 1px solid var(--line); }
+.city-grid p { font-size: 1.1rem; color: var(--t2); max-width: 34rem; }
+.city-grid .city-next { font-size: clamp(1.5rem, 2.6vw, 2rem); letter-spacing: -.025em; line-height: 1.2; color: var(--text); }
 
 /* Footer */
 .site-foot { padding-block: 40px 56px; border-top: 1px solid var(--line); }
 .foot-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px 40px; align-items: center; }
-.foot-grid > p { color: var(--muted); font-size: .95rem; }
-.fine { grid-column: 1 / -1; max-width: 60rem; font-size: .8rem !important; }
+.foot-grid > p { color: var(--t2); font-size: .9375rem; }
+.foot-grid > .fine { grid-column: 1 / -1; max-width: 60rem; font-size: .8125rem; color: var(--t3); }
 
 /* Narrow screens */
 @media (max-width: 1000px) {
-  .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pillars, .chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .hero-grid, .how-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-svg { max-width: 420px; }
 }
 @media (max-width: 860px) {
   .about-grid, .split-head, .mint-grid, .franchise-top, .home-grid, .city-grid { grid-template-columns: minmax(0, 1fr); }
-  .chain { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .chain li:nth-child(3) { border-left: 0; }
-  .chain li:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .chain li:nth-child(3)::before { display: none; }
   .loop { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  .loop li:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -34px; transform: translateX(-50%); }
+  .loop li:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -32px; transform: translateX(-50%); }
   .loop-return { display: none; }
   .loop-note { display: block; }
 }
 @media (max-width: 560px) {
-  .pillars, .steps, .two-up { grid-template-columns: minmax(0, 1fr); }
-  .chain { grid-template-columns: minmax(0, 1fr); }
-  .chain li + li { border-left: 0; border-top: 1px solid var(--line); }
-  .chain li + li::before { display: grid; content: "↓"; left: 22px; top: 0; transform: translateY(-50%); }
-  .spend li { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .pillars, .chain, .two-up { grid-template-columns: minmax(0, 1fr); }
   .foot-grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -463,9 +441,13 @@ h1 .mark {
 </style>
 </head>
 <body>
+
 <header class="site-head">
   <div class="wrap head-row">
-    <a class="wordmark" href="#top" aria-label="VOLT, back to top">VOLT<span class="lamp" aria-hidden="true"></span></a>
+    <a class="brand" href="#top" aria-label="VOLT, back to top">
+      <svg viewBox="0 0 56 72" aria-hidden="true"><path class="logo-bolt" d="M33 4 5 42h17l-8 28 30-40H27z"/><rect class="logo-bar" x="4" y="64" width="48" height="6" rx="3"/></svg>
+      <span class="wordmark">VOLT</span>
+    </a>
     <nav class="site-nav" aria-label="Main">
       <a href="#how">Charging</a>
       <a href="#volters">Volters</a>
@@ -480,51 +462,49 @@ h1 .mark {
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">EV fast charging · Hyderabad</p>
+        <span class="chip">EV fast charging · Hyderabad</span>
         <h1>Fast charging that works. And <span class="mark">pays you back.</span></h1>
         <p class="lede">VOLT ADDAs are fast-charging stations with 160 kW DC chargers, engineered in India with German components. You can use them without downloading an app, and every kWh you charge earns you 5 volters, a coin minted by proof of charge.</p>
         <div class="cta-row">
-          <a class="btn" href="#how">See how charging works</a>
-          <a class="btn btn-ghost" href="#volters">What are volters?</a>
+          <a class="btn btn-light" href="#how">See how charging works</a>
+          <a class="btn btn-outline-light" href="#volters">What are volters?</a>
         </div>
         <ul class="facts">
-          <li><b class="numeral">160</b>kW DC chargers, engineered in India</li>
-          <li><b class="numeral">0</b>apps needed to charge</li>
-          <li><b class="numeral">5</b>volters back for every kWh</li>
-          <li><b class="numeral">50,000</b>volters to open an ADDA</li>
+          <li><b class="big">160</b>kW DC chargers, engineered in India</li>
+          <li><b class="big">0</b>apps needed to charge</li>
+          <li><b class="big">5</b>volters back for every kWh</li>
+          <li><b class="big">50,000</b>volters to open an ADDA</li>
         </ul>
       </div>
-
-      <figure class="device" id="device" data-state="charging" aria-label="Example charging session on a VOLT ADDA charger screen">
-        <div class="device-top">
-          <span class="device-name">VOLT ADDA · Hyderabad</span>
-          <span class="status"><i class="dot"></i><span id="d-status">Charging</span></span>
-        </div>
-        <span class="device-meta">CCS2 · 160 kW DC</span>
-        <div class="readout">
-          <span class="readout-label">Energy delivered</span>
-          <span class="readout-value"><span id="d-kwh">24.62</span><small>kWh</small></span>
-        </div>
-        <div class="device-row"><span>Session time</span><span id="d-time">00:16:25</span></div>
-        <div class="device-split">
-          <div class="device-row strong"><span>Volters minted</span><span id="d-minted">246.2</span></div>
-          <div class="split-bar" aria-hidden="true"><i class="d-you"></i><i class="d-volt"></i><i class="d-home"></i></div>
-          <div class="device-row"><span><i class="key d-you"></i>To you</span><span id="d-you">123.1</span></div>
-          <div class="device-row"><span><i class="key d-volt"></i>To VOLT</span><span id="d-volt">24.6</span></div>
-          <div class="device-row"><span><i class="key d-home"></i>Home-charger pool</span><span id="d-home">98.5</span></div>
-        </div>
-        <div class="device-foot">
-          <span>✓ Meter readings signed on this charger</span>
-          <span class="tag">Example</span>
-        </div>
-      </figure>
+      <div class="hero-art">
+        <svg class="hero-svg" viewBox="0 0 280 180" role="img" aria-label="A car charging at a VOLT ADDA while volters are minted">
+          <g class="coin c1"><circle cx="84" cy="34" r="10" fill="#FFFFFF" opacity=".85"/><path d="M85 28 L80 35 L82.8 35 L81.6 40 L86.8 33 L84 33 Z" fill="#F26212"/></g>
+          <g class="coin c2"><circle cx="180" cy="26" r="13" fill="#00D08A"/><path d="M181.6 18.5 L174.5 28 L178.5 28 L177 35 L184.5 25 L180.6 25 Z" fill="#0B3D2E"/></g>
+          <g class="coin c3"><circle cx="128" cy="44" r="17" fill="#FFFFFF"/><path d="M130.5 35 L121 46 L125.8 46 L123.5 55 L133.5 43.5 L128.8 43.5 Z" fill="#F26212"/></g>
+          <rect x="22" y="80" width="38" height="80" rx="10" fill="#FFFFFF"/>
+          <rect x="29" y="89" width="24" height="28" rx="5" fill="#F26212"/>
+          <path d="M42.5 93 L36.5 104 L40.3 104 L38.6 112 L46 100.5 L42 100.5 Z" fill="#FFFFFF"/>
+          <rect x="31" y="126" width="20" height="4.5" rx="2.2" fill="#FFC49A"/>
+          <rect x="31" y="135" width="13" height="4.5" rx="2.2" fill="#FFC49A"/>
+          <rect x="14" y="156" width="54" height="7" rx="3.5" fill="#D8641A"/>
+          <path d="M60 122 C 80 122 82 138 100 138" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"/>
+          <path d="M100 156 L105 132 Q108 123 119 123 L153 123 L172 106 L212 106 Q225 106 231 117 L242 132 L261 136 Q270 138 270 147 L270 154 Q270 158 266 158 L104 158 Q100 158 100 156 Z" fill="#FFFFFF" stroke="#D8641A" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M157 123 L174 108 L208 108 Q217 108 221 115 L224 123 Z" fill="#FFD9BF"/>
+          <rect x="98" y="131" width="10" height="13" rx="3" fill="#00D08A"/>
+          <rect x="158" y="136" width="72" height="9" rx="3" fill="#F3E2D6"/>
+          <rect class="batt" x="158" y="136" width="72" height="9" rx="3" fill="#00D08A"/>
+          <circle cx="140" cy="158" r="14" fill="#7A3208"/><circle cx="140" cy="158" r="5.5" fill="#FFC49A"/>
+          <circle cx="232" cy="158" r="14" fill="#7A3208"/><circle cx="232" cy="158" r="5.5" fill="#FFC49A"/>
+          <rect x="6" y="169" width="268" height="3" rx="1.5" fill="#D8641A"/>
+        </svg>
+      </div>
     </div>
   </section>
 
   <section class="section" id="about">
     <div class="wrap about-grid">
       <div>
-        <p class="eyebrow">Who we are</p>
+        <span class="chip chip-orange">Who we are</span>
         <h2 class="statement">We're not a conglomerate. We're EV drivers.</h2>
       </div>
       <div class="about-body">
@@ -550,46 +530,84 @@ h1 .mark {
   <section class="section" id="why">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">What we fix</p>
+        <span class="chip chip-orange">What we fix</span>
         <h2>Four things we got tired of as drivers.</h2>
       </div>
       <div class="pillars">
         <article class="pillar">
-          <h3>Reliable</h3>
-          <p class="was"><span class="label">The problem</span>The map says available. You arrive and the charger is down.</p>
-          <p class="now"><span class="label">At VOLT</span>160 kW chargers engineered in India, built with German components and reporting their status live. Each one signs its own meter readings, so the kWh on your receipt can be checked.</p>
+          <div class="pillar-head">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>
+            <h3>Reliable</h3>
+          </div>
+          <p class="was"><span class="chip chip-grey">The problem</span>The map says available. You arrive and the charger is down.</p>
+          <p class="now"><span class="chip chip-orange">At VOLT</span>160 kW chargers engineered in India, built with German components and reporting their status live. Each one signs its own meter readings, so the kWh on your receipt can be checked.</p>
         </article>
         <article class="pillar">
-          <h3>Easy</h3>
-          <p class="was"><span class="label">The problem</span>Every network wants its own app, account and wallet.</p>
-          <p class="now"><span class="label">At VOLT</span>Scan the QR code on the charger and pay with UPI. No app and no sign-up.</p>
+          <div class="pillar-head">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20.5h.01M17 20.5h3.5V17"/></svg></span>
+            <h3>Easy</h3>
+          </div>
+          <p class="was"><span class="chip chip-grey">The problem</span>Every network wants its own app, account and wallet.</p>
+          <p class="now"><span class="chip chip-orange">At VOLT</span>Scan the QR code on the charger and pay with UPI. No app and no sign-up.</p>
         </article>
         <article class="pillar">
-          <h3>Quick</h3>
-          <p class="was"><span class="label">The problem</span>An hour or more plugged into a slow charger.</p>
-          <p class="now"><span class="label">At VOLT</span>160 kW DC chargers at every ADDA. Plug in, have a chai, drive on.</p>
+          <div class="pillar-head">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+            <h3>Quick</h3>
+          </div>
+          <p class="was"><span class="chip chip-grey">The problem</span>An hour or more plugged into a slow charger.</p>
+          <p class="now"><span class="chip chip-orange">At VOLT</span>160 kW DC chargers at every ADDA. Plug in, have a chai, drive on.</p>
         </article>
         <article class="pillar">
-          <h3>Value back</h3>
-          <p class="was"><span class="label">The problem</span>Loyalty points that expire before you use them.</p>
-          <p class="now"><span class="label">At VOLT</span>5 volters for every kWh you charge. Spend them on charging, shop with them, hold them or trade them.</p>
+          <div class="pillar-head">
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg></span>
+            <h3>Value back</h3>
+          </div>
+          <p class="was"><span class="chip chip-grey">The problem</span>Loyalty points that expire before you use them.</p>
+          <p class="now"><span class="chip chip-orange">At VOLT</span>5 volters for every kWh you charge. Spend them on charging, shop with them, hold them or trade them.</p>
         </article>
       </div>
     </div>
   </section>
 
   <section class="section" id="how">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Charging at an ADDA</p>
-        <h2>Four steps. No app.</h2>
+    <div class="wrap how-grid">
+      <div>
+        <div class="section-head">
+          <span class="chip chip-orange">Charging at an ADDA</span>
+          <h2>Four steps. No app.</h2>
+        </div>
+        <ol class="steps">
+          <li><span class="idx" aria-hidden="true">1</span><div><h3>Plug in</h3><p>Connect the CCS2 cable to your car.</p></div></li>
+          <li><span class="idx" aria-hidden="true">2</span><div><h3>Scan</h3><p>Point your phone camera at the QR code on the charger's screen.</p></div></li>
+          <li><span class="idx" aria-hidden="true">3</span><div><h3>Pay</h3><p>Pay with UPI from the payment app you already use.</p></div></li>
+          <li><span class="idx" aria-hidden="true">4</span><div><h3>Drive on</h3><p>Unplug when you're ready. 5 volters for every kWh are credited to you.</p></div></li>
+        </ol>
       </div>
-      <ol class="steps">
-        <li><span class="numeral" aria-hidden="true">1</span><h3>Plug in</h3><p>Connect the CCS2 cable to your car.</p></li>
-        <li><span class="numeral" aria-hidden="true">2</span><h3>Scan</h3><p>Point your phone camera at the QR code on the charger's screen.</p></li>
-        <li><span class="numeral" aria-hidden="true">3</span><h3>Pay</h3><p>Pay with UPI from the payment app you already use.</p></li>
-        <li><span class="numeral" aria-hidden="true">4</span><h3>Drive on</h3><p>Unplug when you're ready. 5 volters for every kWh are credited to you.</p></li>
-      </ol>
+
+      <figure class="device" id="device" data-state="charging" aria-label="Example charging session on a VOLT ADDA charger screen">
+        <div class="device-top">
+          <div><b>VOLT ADDA · Hyderabad</b><span class="lab">CCS2 · 160 kW DC</span></div>
+          <span class="chip chip-green status"><i class="dot"></i><span id="d-status">Charging</span></span>
+        </div>
+        <div class="readout">
+          <span class="lab">Energy delivered</span>
+          <span class="readout-value big"><span id="d-kwh">24.62</span><small>kWh</small></span>
+        </div>
+        <div class="bar" aria-hidden="true"><span id="d-bar" style="width:59%"></span></div>
+        <div class="device-row"><span>Session time</span><span id="d-time">00:16:25</span></div>
+        <div class="mint-tile">
+          <div class="device-row strong"><span>Volters minted</span><span id="d-minted">246.2</span></div>
+          <div class="split-bar" aria-hidden="true"><i class="k-you"></i><i class="k-volt"></i><i class="k-home"></i></div>
+          <div class="device-row"><span><i class="key k-you"></i>To you</span><span id="d-you">123.1</span></div>
+          <div class="device-row"><span><i class="key k-volt"></i>To VOLT</span><span id="d-volt">24.6</span></div>
+          <div class="device-row"><span><i class="key k-home"></i>Home-charger pool</span><span id="d-home">98.5</span></div>
+        </div>
+        <div class="device-foot">
+          <span>✓ Meter readings signed on this charger</span>
+          <span class="chip chip-grey">Example</span>
+        </div>
+      </figure>
     </div>
   </section>
 
@@ -597,22 +615,22 @@ h1 .mark {
     <div class="wrap">
       <div class="split-head">
         <div>
-          <p class="eyebrow">Volters</p>
+          <span class="chip chip-green">Volters</span>
           <h2>A coin you can only mint by charging.</h2>
         </div>
         <p>Volters are created when real energy goes into a real car. We call this proof of charge. Each ADDA charger signs its meter readings with its own key, VOLT checks that signature, and only then are volters minted. The rules are public: 10 volters per kWh, split three ways.</p>
       </div>
 
       <ol class="chain" aria-label="How a volter is minted">
-        <li><b>Measured</b><span>The charger meters every kWh it delivers.</span></li>
-        <li><b>Signed</b><span>It signs those readings with a key that never leaves the charger.</span></li>
-        <li><b>Verified</b><span>VOLT checks the signature against that charger.</span></li>
-        <li><b>Minted</b><span>10 volters per verified kWh.</span></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>Measured</b><span class="lab">The charger meters every kWh it delivers.</span></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>Signed</b><span class="lab">It signs those readings with a key that never leaves the charger.</span></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>Verified</b><span class="lab">VOLT checks the signature against that charger.</span></li>
+        <li><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>Minted</b><span class="lab">10 volters per verified kWh.</span></li>
       </ol>
 
       <div class="mint-grid">
         <div class="split-explain">
-          <p class="big-line"><span class="numeral">1</span>kWh at an ADDA mints<span class="numeral">10</span>volters</p>
+          <p class="big-line"><span class="big">1</span>kWh at an ADDA mints<span class="big">10</span>volters</p>
           <div class="tenbar" role="img" aria-label="Ten volters per kWh: five to the driver, one to VOLT, four to home chargers">
             <i class="c-you"></i><i class="c-you"></i><i class="c-you"></i><i class="c-you"></i><i class="c-you"></i>
             <i class="c-volt"></i>
@@ -638,14 +656,57 @@ h1 .mark {
             <output id="calc-ses-out" for="calc-sessions">8</output>
             <input type="range" id="calc-sessions" min="1" max="30" step="1" value="8">
           </div>
-          <p class="calc-big"><span class="numeral" id="calc-month">1,200</span><small>volters to you each month</small></p>
-          <table class="calc-table">
-            <caption class="label">Each session mints</caption>
+          <p class="mine-card"><small>You earn each month</small><span class="big" id="calc-month">1,200</span><small>volters · 5 per kWh</small></p>
+          <div class="calc-flat">
+            <span class="lab">Each session mints</span>
+            <table class="calc-table">
+              <tbody>
+                <tr><th scope="row">In total</th><td id="c-total">300</td></tr>
+                <tr><th scope="row">To you</th><td id="c-you">150</td></tr>
+                <tr><th scope="row">To VOLT</th><td id="c-volt">30</td></tr>
+                <tr><th scope="row">To the home-charger pool</th><td id="c-home">120</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="franchise">
+    <div class="wrap">
+      <div class="franchise-panel">
+        <div class="franchise-top">
+          <div>
+            <span class="chip chip-orange">Franchise</span>
+            <p class="huge big" aria-hidden="true">50,000<span>volters to open an ADDA</span></p>
+          </div>
+          <div class="franchise-copy">
+            <h2>No franchise fee. Bring 50,000 volters.</h2>
+            <p>To open a VOLT ADDA, a new franchise owner collects 50,000 volters instead of paying us a fee. Most will buy them on open crypto markets, from the drivers and home-charger owners who earned them. The money a franchise would usually pay head office goes back to the people who charge with VOLT.</p>
+            <p class="callout">50,000 volters is everything minted by 5,000 kWh at ADDAs, or the driver share of 10,000 kWh.</p>
+          </div>
+        </div>
+
+        <div class="loop-wrap">
+          <ol class="loop" aria-label="How value flows back to users">
+            <li><span class="idx">1</span><b>Drivers and home chargers earn volters</b>by charging at ADDAs and at home.</li>
+            <li><span class="idx">2</span><b>Volters trade on open markets</b>where anyone can buy them.</li>
+            <li><span class="idx">3</span><b>A new franchise owner buys 50,000</b>to qualify for an ADDA.</li>
+            <li><span class="idx">4</span><b>A new ADDA opens</b>and more charging mints more volters.</li>
+          </ol>
+          <div class="loop-return" aria-hidden="true"><span>Back to step 1</span></div>
+          <p class="loop-note">Then back to step 1, in a new neighbourhood or a new city.</p>
+        </div>
+
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th scope="col">To open</th><th scope="col">A usual franchise</th><th scope="col">A VOLT ADDA</th></tr>
+            </thead>
             <tbody>
-              <tr><th scope="row">In total</th><td id="c-total">300</td></tr>
-              <tr><th scope="row">To you</th><td id="c-you">150</td></tr>
-              <tr><th scope="row">To VOLT</th><td id="c-volt">30</td></tr>
-              <tr><th scope="row">To the home-charger pool</th><td id="c-home">120</td></tr>
+              <tr><th scope="row">You pay</th><td>A fee to the brand</td><td>50,000 volters</td></tr>
+              <tr><th scope="row">The money goes to</th><td>Head office</td><td>Drivers and home-charger owners who sell their volters</td></tr>
             </tbody>
           </table>
         </div>
@@ -653,60 +714,30 @@ h1 .mark {
     </div>
   </section>
 
-  <section class="band" id="franchise">
-    <div class="wrap">
-      <div class="franchise-top">
-        <div>
-          <p class="eyebrow">Franchise</p>
-          <p class="huge numeral" aria-hidden="true">50,000<span>volters</span></p>
-        </div>
-        <div class="franchise-copy">
-          <h2>No franchise fee. Bring 50,000 volters.</h2>
-          <p>To open a VOLT ADDA, a new franchise owner collects 50,000 volters instead of paying us a fee. Most will buy them on open crypto markets, from the drivers and home-charger owners who earned them. The money a franchise would usually pay head office goes back to the people who charge with VOLT.</p>
-          <p class="mono-note">50,000 volters = everything minted by 5,000 kWh at ADDAs = the driver share of 10,000 kWh.</p>
-        </div>
-      </div>
-
-      <div class="loop-wrap">
-        <ol class="loop" aria-label="How value flows back to users">
-          <li><span class="label">Step 1</span><b>Drivers and home chargers earn volters</b>by charging at ADDAs and at home.</li>
-          <li><span class="label">Step 2</span><b>Volters trade on open markets</b>where anyone can buy them.</li>
-          <li><span class="label">Step 3</span><b>A new franchise owner buys 50,000</b>to qualify for an ADDA.</li>
-          <li><span class="label">Step 4</span><b>A new ADDA opens</b>and more charging mints more volters.</li>
-        </ol>
-        <div class="loop-return" aria-hidden="true"><span>Back to step 1</span></div>
-        <p class="loop-note">Then back to step 1, in a new neighbourhood or a new city.</p>
-      </div>
-
-      <div class="compare-wrap">
-        <table class="compare">
-          <thead>
-            <tr><th scope="col"><span class="label">To open</span></th><th scope="col"><span class="label">A usual franchise</span></th><th scope="col"><span class="label">A VOLT ADDA</span></th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">You pay</th><td>A fee to the brand</td><td>50,000 volters</td></tr>
-            <tr><th scope="row">The money goes to</th><td>Head office</td><td>Drivers and home-charger owners who sell their volters</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="home-charger">
     <div class="wrap home-grid">
       <div>
-        <p class="eyebrow">Home chargers</p>
+        <span class="chip chip-orange">Home chargers</span>
         <h2>Mine volters from your own parking spot.</h2>
         <p>VOLT sells home chargers for houses and apartment parking. Charge overnight and your charger mines from the home-charger pool, so you keep earning volters even in weeks you never visit an ADDA.</p>
-        <p class="pool-line"><span class="numeral">4</span><span>of every 10 volters minted at an ADDA go into the pool that home chargers mine.</span></p>
+        <div class="pool-line"><span class="big">4</span><span>of every 10 volters minted at an ADDA go into the pool that home chargers mine.</span></div>
       </div>
       <div>
-        <p class="eyebrow">Spending volters</p>
+        <span class="chip chip-green">Spending volters</span>
         <h2>Charge, shop or trade.</h2>
         <ul class="spend">
-          <li><h3>Charge</h3><p>Redeem volters for fast charging at any VOLT ADDA.</p></li>
-          <li><h3>Shop</h3><p>Spend them in the shop inside the VOLT app.</p></li>
-          <li><h3>Trade</h3><p>Sell them on open crypto markets, or hold them. Every new franchise owner needs 50,000.</p></li>
+          <li>
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+            <div><h3>Charge</h3><p>Redeem volters for fast charging at any VOLT ADDA.</p></div>
+          </li>
+          <li>
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg></span>
+            <div><h3>Shop</h3><p>Spend them in the shop inside the VOLT app.</p></div>
+          </li>
+          <li>
+            <span class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h15l-3.5-3.5M20 16H5l3.5 3.5"/></svg></span>
+            <div><h3>Trade</h3><p>Sell them on open crypto markets, or hold them. Every new franchise owner needs 50,000.</p></div>
+          </li>
         </ul>
       </div>
     </div>
@@ -715,9 +746,9 @@ h1 .mark {
   <section class="section" id="where">
     <div class="wrap">
       <div class="city-head">
-        <p class="eyebrow">Where we are</p>
+        <span class="chip chip-orange">Where we are</span>
         <h2 class="city-name">Hyderabad first.</h2>
-        <p class="coords">17.385° N · 78.487° E</p>
+        <p class="coords"><svg viewBox="0 0 32 40" aria-hidden="true"><path class="pin" d="M16 1C8.8 1 3 6.8 3 14c0 9.2 13 25 13 25s13-15.8 13-25C29 6.8 23.2 1 16 1z"/><path class="pin-bolt" d="M18.6 7.2 10 18.8h5.2l-2.4 8.6 9.2-12.2h-5.4z"/></svg>17.385° N · 78.487° E</p>
       </div>
       <div class="city-grid">
         <p>Our first ADDAs are in Hyderabad. Every new city opens the same way: a local franchise owner, 50,000 volters and our 160 kW chargers.</p>
@@ -729,7 +760,10 @@ h1 .mark {
 
 <footer class="site-foot">
   <div class="wrap foot-grid">
-    <span class="wordmark">VOLT<span class="lamp" aria-hidden="true"></span></span>
+    <span class="brand">
+      <svg viewBox="0 0 56 72" aria-hidden="true"><path class="logo-bolt" d="M33 4 5 42h17l-8 28 30-40H27z"/><rect class="logo-bar" x="4" y="64" width="48" height="6" rx="3"/></svg>
+      <span class="wordmark">VOLT</span>
+    </span>
     <p>Reliable, easy EV charging. Built in Hyderabad. © 2026 VOLT.</p>
     <p class="fine">Volters are a utility token for use in the VOLT network. Their market price is set by buyers and sellers and can fall as well as rise. Nothing on this site is investment advice.</p>
   </div>
@@ -742,7 +776,7 @@ h1 .mark {
   const f0 = nf(0), f1 = nf(1), f2 = nf(2);
   const r1 = (n) => Math.round(n * 10) / 10;
 
-  // Hero charger screen: an example session, sped up. The home pool takes the remainder,
+  // Charger screen: an example session, sped up. The home pool takes the remainder,
   // so the three shares always add up to the total shown.
   const device = $('device');
   const AVG_KW = 90, RATE = 0.5, END = 42, HOLD_MS = 4000;
@@ -750,6 +784,7 @@ h1 .mark {
     const minted = r1(kwh * 10), you = r1(kwh * 5), volt = r1(kwh);
     const s = Math.round(kwh / AVG_KW * 3600);
     $('d-kwh').textContent = f2.format(kwh);
+    $('d-bar').style.width = (kwh / END * 100).toFixed(1) + '%';
     $('d-time').textContent = [s / 3600, (s % 3600) / 60, s % 60]
       .map((v) => String(Math.floor(v)).padStart(2, '0')).join(':');
     $('d-minted').textContent = f1.format(minted);
