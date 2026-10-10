@@ -1,2 +1,6 @@
 .vercel
 .DS_Store
+models/harrier/
+models/bmw/
+models/mg/
+models/tiago/
